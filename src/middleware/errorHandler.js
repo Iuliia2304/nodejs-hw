@@ -5,13 +5,13 @@ export const errorHandler = (err, req, res, next) => {
 
   if (err instanceof HttpError) {
     return res.status(err.status).json({
-      error: isProd
+      message: isProd
         ? "Something went wrong. Please try again later."
         : err.message || err.name,
     });
   }
 
   res.status(500).json({
-    error: isProd ? "Oops, we had an error, sorry 😞" : err.message,
+    message: isProd ? "Oops, we had an error, sorry 😞" : err.message,
   });
 };

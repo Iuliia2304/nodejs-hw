@@ -37,15 +37,18 @@ export const deleteNote = async (req, res) => {
 };
 
 export const updateNote = async (req, res) => {
-    const { noteId } = req.params;
-    const note = await Note.findOneAndUpdate({
-      _id: noteId},
-      req.body,
-      { new: true }
-    );
+  const { noteId } = req.params;
 
-    if (!note) {
-      throw createHttpError(404, "Note not found");
-    }
-  res.status(200).json({ message: "Update note - to be implemented" });
+  const note = await Note.findOneAndUpdate(
+    { _id: noteId },
+    req.body,
+    { new: true, runValidators: true }
+  );
+
+  if (!note) {
+    throw createHttpError(404, "Note not found");
+  }
+
+  res.status(200).json(note);
 };
+
